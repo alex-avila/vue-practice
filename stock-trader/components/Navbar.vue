@@ -15,14 +15,14 @@
 
         <a
           :class="['navbar-burger', 'burger', {'is-active': isActive}]"
+          :aria-expanded="isActive"
           role="button"
           aria-label="menu"
-          aria-expanded="false"
           @click="toggleBurgerMenu"
         >
-          <span aria-hidden="true"/>
-          <span aria-hidden="true"/>
-          <span aria-hidden="true"/>
+          <span :aria-hidden="!isActive"/>
+          <span :aria-hidden="!isActive"/>
+          <span :aria-hidden="!isActive"/>
         </a>
       </div>
 
@@ -31,13 +31,13 @@
       >
         <div class="navbar-start">
           <nuxt-link
-            class="navbar-item"
+            :class="['navbar-item', {'is-active': $route.name === 'portfolio'}]"
             to="/portfolio"
           >
             Portfolio
           </nuxt-link>
           <nuxt-link
-            class="navbar-item"
+            :class="['navbar-item', {'is-active': $route.name === 'stocks'}]"
             to="/stocks"
           >
             Stocks
@@ -75,7 +75,7 @@ export default {
   data: () => ({ isActive: false, funds: 0 }),
   computed: {
     formattedFunds() {
-      return this.funds
+      return new Intl.NumberFormat().format(this.funds)
     }
   },
   methods: {
