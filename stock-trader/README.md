@@ -1,6 +1,6 @@
 # stock-trader
 
-> My luminous Nuxt.js project
+> My world-class Nuxt.js project
 
 ## Build Setup
 
