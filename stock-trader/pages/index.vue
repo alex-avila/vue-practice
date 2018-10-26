@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div>Hello, World!</div>
+    <div/>
   </section>
 </template>
 
