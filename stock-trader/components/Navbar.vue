@@ -1,10 +1,10 @@
 <template>
-  <div class="container">
-    <nav
-      class="navbar"
-      role="navigation"
-      aria-label="main navigation"
-    >
+  <nav
+    class="navbar has-shadow is-spaced"
+    role="navigation"
+    aria-label="main navigation"
+  >
+    <div class="container">
       <div class="navbar-brand">
         <nuxt-link
           class="navbar-item is-size-5 has-text-weight-semibold has-text-primary"
@@ -66,13 +66,18 @@
           </div>
         </div>
       </div>
-    </nav>
-  </div>
+    </div>
+  </nav>
 </template>
 
 <script>
 export default {
-  data: () => ({ isActive: false, funds: 0 }),
+  data() {
+    return {
+      isActive: false,
+      funds: this.$store.state.funds
+    }
+  },
   computed: {
     formattedFunds() {
       return new Intl.NumberFormat().format(this.funds)
