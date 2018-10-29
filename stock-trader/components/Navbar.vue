@@ -74,13 +74,12 @@
 export default {
   data() {
     return {
-      isActive: false,
-      funds: this.$store.state.funds
+      isActive: false
     }
   },
   computed: {
     formattedFunds() {
-      return new Intl.NumberFormat().format(this.funds)
+      return new Intl.NumberFormat().format(this.$store.getters.funds)
     }
   },
   methods: {
