@@ -11,8 +11,8 @@
         <p>You may save and load your data.</p>
         <p>Click on "End Day" to begin a new Day!</p>
       </div>
-      <hr style="margin: 1rem 0 1rem">
-      <p class="has-text-weight-bold is-size-5">Your Funds: ${{ funds }}</p>
+      <hr style="margin: 1rem 0">
+      <p class="has-text-weight-bold is-size-5">Your Funds: ${{ formattedFunds }}</p>
     </div>
   </section>
 </template>
@@ -20,8 +20,8 @@
 <script>
 export default {
   computed: {
-    funds() {
-      return this.$store.getters.funds
+    formattedFunds() {
+      return new Intl.NumberFormat().format(this.$store.getters.funds)
     }
   }
 }

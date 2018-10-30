@@ -4,9 +4,9 @@
       <div class="columns is-multiline is-8">
         <stock
           v-for="stock in $store.state.stocks"
-          v-bind="stock"
+          :stock="stock"
           :key="stock.name"
-          @addStock="addStock"
+          @buyStocks="buyStocks"
         />
       </div>
     </div>
@@ -17,12 +17,10 @@
 import Stock from '@/components/Stock.vue'
 
 export default {
-  components: {
-    Stock
-  },
+  components: { Stock },
   methods: {
-    addStock(stock) {
-      this.$store.dispatch('addStock', stock)
+    buyStocks(order) {
+      this.$store.dispatch('buyStocks', order)
     }
   }
 }

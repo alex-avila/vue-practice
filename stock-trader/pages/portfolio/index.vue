@@ -1,23 +1,37 @@
 <template>
   <section class="section">
     <div class="container">
-      <div class="columns is-multiline is-8">
+      <div
+        v-if="$store.getters.portfolio.length"
+        class="columns is-multiline is-8"
+      >
         <stock
-          v-for="stock in $store.state.portfolio"
-          v-bind="stock"
+          v-for="stock in $store.getters.portfolio"
+          :stock="stock"
           :key="stock.name"
-          @addStock="addStock"
+          mode="sell"
+          @sellStocks="sellStocks"
         />
       </div>
+      <h3
+        v-else
+        class="title"
+      >
+        You have no stocks on your portfolio.
+      </h3>
     </div>
   </section>
 </template>
 
 <script>
 import Stock from '@/components/Stock.vue'
+
 export default {
-  components: {
-    Stock
+  components: { Stock },
+  methods: {
+    sellStocks(order) {
+      this.$store.dispatch('sellStocks', order)
+    }
   }
 }
 </script>

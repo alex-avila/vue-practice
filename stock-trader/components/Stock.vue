@@ -5,7 +5,7 @@
     <div class="card">
       <header class="card-header">
         <p class="card-header-title has-background-light">
-          {{ name }} (Price: {{ price }})
+          {{ stock.name }} <small>&nbsp;(Price: {{ stock.price }}{{ mode === 'sell' ? ` | Quantity: ${stock.quantity}` : null }})</small>
         </p>
       </header>
       <div class="level card-content">
@@ -14,8 +14,8 @@
             <div class="control">
               <input
                 v-model="quantity"
+                :class="['input', mode === 'buy' ? 'is-primary' : 'is-danger']"
                 type="text"
-                class="input is-primary"
                 placeholder="Quantity"
               >
             </div>
@@ -23,10 +23,11 @@
         </div>
         <div class="level-right">
           <button
-            class="level-item button is-primary"
-            @click="addStock"
+            :class="buttonClasses"
+            :disabled="Number(quantity) <= 0 || !Number.isInteger(Number(quantity))"
+            @click="mode === 'buy' ? buyStocks() : sellStocks()"
           >
-            Buy
+            {{ mode === 'buy' ? 'Buy' : 'Sell' }}
           </button>
         </div>
       </div>
@@ -37,28 +38,46 @@
 <script>
 export default {
   props: {
-    name: {
-      type: String,
+    stock: {
+      type: Object,
       required: true
     },
-    price: {
-      type: Number,
-      required: true
+
+    mode: {
+      type: String,
+      validator: v => ['buy', 'sell'].includes(v),
+      default: 'buy'
     }
   },
+
   data() {
     return {
-      quantity: null
+      quantity: '',
+
+      buttonClasses: [
+        'level-item',
+        'button',
+        'is-outlined',
+        this.mode === 'buy' ? 'is-primary' : 'is-danger'
+      ]
     }
   },
+
   methods: {
-    addStock() {
-      const stock = {
-        name: this.name,
-        price: this.price,
-        quantity: this.quantity
+    buyStocks() {
+      const order = {
+        ...this.stock,
+        quantity: Number(this.quantity)
       }
-      this.$emit('addStock', stock)
+      this.$emit('buyStocks', order)
+    },
+
+    sellStocks() {
+      const order = {
+        ...this.stock,
+        quantity: Number(this.quantity)
+      }
+      this.$emit('sellStocks', order)
     }
   }
 }
